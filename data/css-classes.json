@@ -1,0 +1,10 @@
+{
+	"CLASSES": {
+		"aui-btn-cancel": "close-panel",
+		"btn-cancel": "close-panel",
+		"portlet-msg-alert": "alert",
+		"portlet-msg-error": "alert alert-error",
+		"portlet-msg-info": "alert alert-info",
+		"portlet-msg-success": "alert alert-success"
+	}
+}
