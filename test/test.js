@@ -26,5 +26,16 @@ Liferay.provide(
 			}
 		);
 	},
-	['aui-base']
+	['aui-panel']
 );
+
+
+<aui:script use="aui-template">
+	Liferay.Util.addInputType();
+
+	Liferay.Portlet.ready(
+		function(portletId, node) {
+			Liferay.Util.addInputType(node);
+		}
+	);
+</aui:script>
