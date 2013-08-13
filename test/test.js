@@ -1,3 +1,18 @@
+var Util = Liferay.Util;
+
+A.one('#<portlet:namespace />selectAssetFm').delegate(
+	'click',
+	function(event) {
+		var result = Util.getAttributes(event.currentTarget, 'data-');
+
+		Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+		Util.getWindow().hide();
+	},
+	'.selector-button input'
+);
+
+
 AUI.add(
 	'liferay-input-localized',
 	function(A) {
