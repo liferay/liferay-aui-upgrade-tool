@@ -24,7 +24,6 @@ AUI.add(
 );
 
 
-
 Liferay.provide(
 	Util,
 	'toggleDisabled',
