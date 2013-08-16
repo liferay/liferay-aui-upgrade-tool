@@ -1,6 +1,6 @@
-<aui:input 
-label="" cssClass="alabala" name="inviteResource" 
-placeholder="add-people-groups-rooms" 
+<aui:input
+label="" cssClass="alabala" name="inviteResource"
+placeholder="add-people-groups-rooms"
 inputCssClass="calendar-portlet-invite-resources-input1" type="text" />
 
 
