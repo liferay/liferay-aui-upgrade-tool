@@ -17,8 +17,6 @@
 		name: "Test Replace Selector Button",
 
 		'test convert inputCSSClass': function() {
-			console.log(content);
-
 			YUITest.Assert.isTrue(content.indexOf('testDelegate()},\n    \'.selector-button\'') !== -1, '.selector-button input on new lines should be transformed.');
 
 			YUITest.Assert.isTrue(content.indexOf('test123,\n    \'.selector-button\'') !== -1, '.selector-button input with function declaration should be transformed.');

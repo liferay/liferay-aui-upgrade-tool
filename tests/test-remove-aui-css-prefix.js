@@ -23,9 +23,9 @@
 
 			YUITest.Assert.isTrue(contentCSS.indexOf('.btn-cancel {') !== -1, '.aui-btn-cancel should be transformed.');
 
-			YUITest.Assert.isTrue(contentCSS.indexOf('.test123 .aui-foo-bar {') !== -1, '.aui-foo-bar should be transformed.');
+			YUITest.Assert.isTrue(contentCSS.indexOf('.test123 .foo-bar {') !== -1, '.aui-foo-bar should be transformed.');
 
-			YUITest.Assert.isTrue(contentCSS.indexOf('.aui-this-should-be-removed {') !== -1, '.aui-this-should-be-removed should be transformed.');
+			YUITest.Assert.isTrue(contentCSS.indexOf('.this-should-be-removed {') !== -1, '.aui-this-should-be-removed should be transformed.');
 		},
 
 		'test remove aui- prefix from JS': function() {

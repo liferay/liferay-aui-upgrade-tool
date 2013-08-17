@@ -17,7 +17,7 @@
 		'test adding suffixes via require': function() {
 			YUITest.Assert.isTrue(content.indexOf('requires: [\'aui-base-deprecated\', \'aui-component\',') !== -1, 'aui-base should be transformed.');
 
-			YUITest.Assert.isTrue(content.indexOf('\'aui-delayed-task\', \'aui-set\',') !== -1, 'aui-delayed-task should be transformed.');
+			YUITest.Assert.isTrue(content.indexOf('\'aui-delayed-task-deprecated\', \'aui-set\',') !== -1, 'aui-delayed-task should be transformed.');
 		},
 
 		'test adding suffixes via Liferay.provide': function() {
