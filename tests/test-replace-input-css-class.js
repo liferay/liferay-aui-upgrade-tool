@@ -3,9 +3,11 @@
 
 	var YUITest = require('yuitest');
 
-	var replaceInputCSSClass = (new (require('../lib/replace-input-css-class.js').ReplaceInputCSSClass)());
+	var path = require('path');
 
-	var testData = require('fs').readFileSync('../data/data-replace-input-css-class.jsp', 'utf8');
+	var replaceInputCSSClass = (new (require(path.resolve(__dirname, '../lib/replace-input-css-class.js')).ReplaceInputCSSClass)());
+
+	var testData = require('fs').readFileSync(path.resolve(__dirname, '../data/data-replace-input-css-class.jsp'), 'utf8');
 
 	var content = replaceInputCSSClass.process(testData);
 
@@ -22,6 +24,4 @@
 			YUITest.Assert.isTrue(content.indexOf('cssClass="test">') !== -1, 'inputCSSClass as single attrbiute should be transformed.');
 		}
 	}));
-
-	YUITest.TestRunner.run();
 })();

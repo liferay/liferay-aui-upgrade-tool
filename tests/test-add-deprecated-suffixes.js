@@ -3,9 +3,11 @@
 
 	var YUITest = require('yuitest');
 
-	var addDeprecatedSuffixes = (new (require('../lib/add-deprecated-suffixes.js').AddDeprecatedSuffixes)());
+	var path = require('path');
 
-	var testData = require('fs').readFileSync('../data/data-add-deprecated-suffixes.js', 'utf8');
+	var addDeprecatedSuffixes = (new (require(path.resolve(__dirname, '../lib/add-deprecated-suffixes.js')).AddDeprecatedSuffixes)());
+
+	var testData = require('fs').readFileSync(path.resolve(__dirname, '../data/data-add-deprecated-suffixes.js'), 'utf8');
 
 	var content = addDeprecatedSuffixes.process(testData);
 
@@ -26,6 +28,4 @@
 			YUITest.Assert.isTrue(content.indexOf('<aui:script use="aui-template-deprecated">') !== -1, 'aui-template should be transformed.');
 		}
 	}));
-
-	YUITest.TestRunner.run();
 })();

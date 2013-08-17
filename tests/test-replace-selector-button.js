@@ -3,9 +3,11 @@
 
 	var YUITest = require('yuitest');
 
-	var replaceSelectorButton = (new (require('../lib/replace-selector-button.js').ReplaceSelectorButton)());
+	var path = require('path');
 
-	var testData = require('fs').readFileSync('../data/data-replace-selector-button.js', 'utf8');
+	var replaceSelectorButton = (new (require(path.resolve(__dirname, '../lib/replace-selector-button.js')).ReplaceSelectorButton)());
+
+	var testData = require('fs').readFileSync(path.resolve(__dirname, '../data/data-replace-selector-button.js'), 'utf8');
 
 	var content = replaceSelectorButton.process(testData);
 
@@ -22,6 +24,4 @@
 			YUITest.Assert.isTrue(content.indexOf('},\n    \'.selector-button\'\n);;;') !== -1, '.selector-button in on listener should be transformed.');
 		}
 	}));
-
-	YUITest.TestRunner.run();
 })();

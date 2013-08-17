@@ -3,13 +3,15 @@
 
 	var YUITest = require('yuitest');
 
+	var path = require('path');
+
 	var fs = require('fs');
 
-	var renameCSSClasses = (new (require('../lib/rename-css-classes.js').RenameCSSClasses)());
+	var renameCSSClasses = (new (require(path.resolve(__dirname, '../lib/rename-css-classes.js')).RenameCSSClasses)());
 
-	var testDataCSS = fs.readFileSync('../data/data-rename-css-classes.css', 'utf8');
-	var testDataJS = fs.readFileSync('../data/data-rename-css-classes.js', 'utf8');
-	var testDataJSP = fs.readFileSync('../data/data-rename-css-classes.jsp', 'utf8');
+	var testDataCSS = fs.readFileSync(path.resolve(__dirname, '../data/data-rename-css-classes.css'), 'utf8');
+	var testDataJS = fs.readFileSync(path.resolve(__dirname, '../data/data-rename-css-classes.js'), 'utf8');
+	var testDataJSP = fs.readFileSync(path.resolve(__dirname, '../data/data-rename-css-classes.jsp'), 'utf8');
 
 	var contentCSS = renameCSSClasses.process(testDataCSS);
 	var contentJS = renameCSSClasses.process(testDataJS);
@@ -40,6 +42,4 @@
 			YUITest.Assert.isTrue(contentJPS.indexOf('<div class="alert">') !== -1, '<div class="portlet-msg-alert"> should be transformed.');
 		}
 	}));
-
-	YUITest.TestRunner.run();
 })();

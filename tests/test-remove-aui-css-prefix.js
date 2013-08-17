@@ -3,15 +3,17 @@
 
 	var YUITest = require('yuitest');
 
-	var addDeprecatedSuffixes = (new (require('../lib/remove-css-prefixes.js').AddDeprecatedSuffixes)());
+	var path = require('path');
 
-	var testDataJS = require('fs').readFileSync('../data/data-remove-css-prefixes.js', 'utf8');
+	var removeAUICSSPrefix = (new (require(path.resolve(__dirname, '../lib/remove-aui-css-prefix.js')).RemoveAUICSSPrefix)());
 
-	var testDataCSS = require('fs').readFileSync('../data/data-remove-css-prefixes.css', 'utf8');
+	var testDataJS = require('fs').readFileSync(path.resolve(__dirname, '../data/data-remove-aui-css-prefix.js'), 'utf8');
 
-	var contentJS = addDeprecatedSuffixes.process(testDataJS);
+	var testDataCSS = require('fs').readFileSync(path.resolve(__dirname, '../data/data-remove-aui-css-prefix.css'), 'utf8');
 
-	var contentCSS = addDeprecatedSuffixes.process(testDataCSS);
+	var contentJS = removeAUICSSPrefix.process(testDataJS);
+
+	var contentCSS = removeAUICSSPrefix.process(testDataCSS);
 
 	YUITest.TestRunner.add(new YUITest.TestCase({
 		name: "Test Remove AUI Prefixes",
@@ -34,6 +36,4 @@
 			YUITest.Assert.isTrue(contentJS.indexOf('var cssClass = "foo123";') !== -1, 'aui-foo123 should be transformed.');
 		}
 	}));
-
-	YUITest.TestRunner.run();
 })();
