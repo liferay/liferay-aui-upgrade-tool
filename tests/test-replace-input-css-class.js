@@ -17,9 +17,9 @@
 		'test convert inputCSSClass': function() {
 			YUITest.Assert.isTrue(content.indexOf('cssClass="alabala calendar-portlet-invite-resources-input1"') !== -1, 'inputCSSClass on new lines should be transformed.');
 
-			YUITest.Assert.isTrue(content.indexOf(' inputCssClass="alabala calendar-portlet-invite-resources-input2"') !== -1, 'inputCSSClass on same line should be transformed.');
+			YUITest.Assert.isTrue(content.indexOf(' cssClass="alabala calendar-portlet-invite-resources-input2"') !== -1, 'inputCSSClass on same line should be transformed.');
 
-			YUITest.Assert.isTrue(content.indexOf(' inputCssClass="alabala calendar-portlet-invite-resources-input2"') !== -1, 'inputCSSClass as second attribute on same line should be transformed.');
+			YUITest.Assert.isTrue(content.indexOf(' cssClass="alabala calendar-portlet-invite-resources-input2"') !== -1, 'inputCSSClass as second attribute on same line should be transformed.');
 
 			YUITest.Assert.isTrue(content.indexOf('cssClass="test">') !== -1, 'inputCSSClass as single attrbiute should be transformed.');
 		}

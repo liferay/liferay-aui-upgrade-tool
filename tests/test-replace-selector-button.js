@@ -12,7 +12,7 @@
 	var content = replaceSelectorButton.process(testData);
 
 	YUITest.TestRunner.add(new YUITest.TestCase({
-		name: "Test Convert inputCSSClass to cssClass",
+		name: "Test Replace Selector Button",
 
 		'test convert inputCSSClass': function() {
 			YUITest.Assert.isTrue(content.indexOf('},\n    \'.selector-button\'') !== -1, '.selector-button input on new lines should be transformed.');
