@@ -5,8 +5,7 @@ A.one('#<portlet:namespace />selectAssetFm').delegate(
 
         Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-        Util.getWindow().hide();
-    },
+        testDelegate()},
     '.selector-button input'
 );
 
@@ -35,7 +34,6 @@ A.one('#<portlet:namespace />selectAssetFm').on(
 
         Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-        Util.getWindow().hide();
-    },
+    teston();},
     '.selector-button input'
 );;;
