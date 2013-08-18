@@ -3,8 +3,6 @@
 
 	var YUITest = require('yuitest');
 
-	debugger;
-
 	var path = require('path');
 
 	var replaceSelectorButton = (new (require(path.resolve(__dirname, '../lib/replace-selector-button.js')).ReplaceSelectorButton)());
