@@ -36,6 +36,10 @@
 			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="alert alert-error"><liferay-ui:message') !== -1, '<span class="portlet-msg-error"><liferay-ui:message should be transformed.');
 
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="alert">') !== -1, '<div class="portlet-msg-alert"> should be transformed.');
+
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-error" id="') !== -1, '<div class="hide portlet-msg-error" id=" should be transformed');
+
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-success" id="') !== -1, '<div class="hide portlet-msg-success" id=" should be transformed');
 		}
 	}));
 })();
