@@ -36,8 +36,9 @@ Running tests
 -------------
 
 The tool comes with unit tests, created using YUI Test. In order to run them:
-1. Run:
+
+1. Run:  
 $ npm install yuitest
 
-2. Execute:
+2. Execute:  
 ./node_modules/.bin/yuitest tests
