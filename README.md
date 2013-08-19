@@ -12,7 +12,9 @@ How to run the tool
 
 1. Install NodeJS
 2. Clone the repository and navigate to its directory
-3. Execute "node bin/ut.js -f projects/liferay/liferay-plugins"
+3. Install the reqiured modules:  
+$ npm install commander fs-extra walkdir yuitest
+4. Execute "node bin/ut.js -f projects/liferay/liferay-plugins"
 
 where "projects/liferay/liferay-plugins" is the directory which contains the Portlets which have to be migrated.
 
