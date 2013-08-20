@@ -1,0 +1,11 @@
+{
+	"FILES": [
+		"README.md",
+		"assets",
+		"bin",
+		"lib",
+		"node_modules/fs-extra",
+		"node_modules/commander",
+		"node_modules/walkdir"
+	]
+}

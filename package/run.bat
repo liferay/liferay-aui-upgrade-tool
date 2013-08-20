@@ -1,0 +1,1 @@
+node.exe data\bin\laut.js %*

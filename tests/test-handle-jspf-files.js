@@ -19,7 +19,7 @@
 
             exec = require('child_process').exec;
 
-            exec('node bin/ut.js -f ' + file,
+            exec('node bin/laut.js -f ' + file,
                 function(error, stdout, stderr) {
                     var content = fs.readFileSync(file, 'utf8');
 
