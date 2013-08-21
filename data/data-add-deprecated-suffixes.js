@@ -5,7 +5,7 @@ AUI.add(
     },
     '',
     {
-        requires: ['aui-base', 'aui-component', 'aui-event-input', 'aui-delayed-task', 'aui-set', 'aui-tooltip', 'liferay-form', 'portal-available-languages']
+        requires: ['aui-base', 'aui-form', 'aui-component', 'aui-event-input', 'aui-delayed-task', 'aui-set', 'aui-tooltip', 'liferay-form', 'portal-available-languages']
     }
 );
 
