@@ -2,7 +2,6 @@
 	"DEPRECATED_MODULES": [
 		"aui-autocomplete",
 	    "aui-autosize",
-	    "aui-base",
 	    "aui-button-item",
 	    "aui-chart",
 	    "aui-color-picker-base",
