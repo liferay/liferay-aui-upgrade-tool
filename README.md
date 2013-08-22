@@ -4,7 +4,7 @@ Liferay Upgrade Tool
 What is it and why it would be useful
 -------------
 
-After the migration to Alloy 2.0 and Bootstrap, there are some changes, which have to be done in order to run succesfully the already existing Portlets in Liferay Portal 6.2. Most of these changes should be done in JS, CSS and JSP files.
+After the migration to Alloy 2.0 and Bootstrap, there are some changes, which have to be done in order to run successfully the already existing Portlets in Liferay Portal 6.2. Most of these changes should be done in JS, CSS and JSP files.
 To be more easier to upgrade the code, we have created this tool. Depending on your code, it will do 80-100% of the needed changes.
 
 How to run the tool
@@ -18,7 +18,7 @@ $ npm install commander fs-extra walkdir yuitest
 
 where "projects/liferay/liferay-plugins" is the directory which contains the Portlets which have to be migrated.
 
-Oce you run it, the tool will change what is possible. As a developer, you will have to review the changes and accept or reject them. Even if you reject them, they will still be useful as a hint that something won't work in this case and you will have to apply manually a change there.
+Once you run it, the tool will change what is possible. As a developer, you will have to review the changes and accept or reject them. Even if you reject them, they will still be useful as a hint that something won't work in this case and you will have to apply manually a change there.
 
 How fast is the tool
 -------------
