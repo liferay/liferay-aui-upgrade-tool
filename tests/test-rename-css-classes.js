@@ -25,13 +25,13 @@
 
 			YUITest.Assert.isTrue(contentCSS.indexOf('.alert {') !== -1, '.portlet-msg-alert { should be transformed.');
 
-			YUITest.Assert.isTrue(contentCSS.indexOf('.alert .alert-success .alert .alert-info {') !== -1, '.portlet-msg-success .portlet-msg-info { should be transformed.');
+			YUITest.Assert.isTrue(contentCSS.indexOf('.alert.alert-success .alert.alert-info {') !== -1, '.portlet-msg-success .portlet-msg-info { should be transformed.');
 		},
 
 		'test rename CSS classes from JSP': function() {
 			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="alert alert-error"><%= fi') !== -1, 'portlet-msg-error should be transformed.');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('A.all(\'.alert .alert-success\').hide();') !== -1, 'portlet-msg-success should be transformed.');
+			YUITest.Assert.isTrue(contentJSP.indexOf('A.all(\'.alert.alert-success\').hide();') !== -1, 'portlet-msg-success should be transformed.');
 
 			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="alert alert-error"><liferay-ui:message') !== -1, '<span class="portlet-msg-error"><liferay-ui:message should be transformed.');
 
