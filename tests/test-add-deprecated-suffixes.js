@@ -39,5 +39,9 @@
 		'test adding suffixes to more than one module': function() {
 			YUITest.Assert.isTrue(contentJSP.indexOf('"baui-io-plugin2,aui-io-plugin-deprecated"') !== -1, '"baui-io-plugin2,aui-io-plugin" should be transformed.');
 		},
+
+		'test adding suffixes in case of position="inline"': function() {
+			YUITest.Assert.isTrue(contentJSP.indexOf('<aui:script position="inline" use="aui-io-plugin-deprecated,aui-io-deprecated,baui-io-plugin">') !== -1, '<aui:script position="inline" use="aui-io-plugin,aui-io,baui-io-plugin"> should be transformed.');
+		}		
 	}));
 })();

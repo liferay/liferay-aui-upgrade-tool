@@ -17,3 +17,5 @@
 <aui:script use="aui-io-plugin,aui-io,baui-io-plugin">
 
 <aui:script use="aui-io-plugin">
+
+<aui:script position="inline" use="aui-io-plugin,aui-io,baui-io-plugin">
