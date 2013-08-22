@@ -28,14 +28,3 @@ Liferay.provide(
     },
     ['aui-panel']
 );
-
-// test aui:script
-<aui:script use="aui-template">
-    Liferay.Util.addInputType();
-
-    Liferay.Portlet.ready(
-        function(portletId, node) {
-            Liferay.Util.addInputType(node);
-        }
-    );
-</aui:script>
