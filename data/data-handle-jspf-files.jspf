@@ -1,0 +1,1 @@
+A.all('.portlet-msg-success').hide();
