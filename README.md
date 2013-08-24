@@ -20,6 +20,21 @@ where "projects/liferay/liferay-plugins" is the directory which contains the Por
 
 Once you run it, the tool will change what is possible. As a developer, you will have to review the changes and accept or reject them. Even if you reject them, they will still be useful as a hint that something won't work in this case and you will have to apply manually a change there.
 
+You can pass arguments too, here they are:
+````bash
+$ node bin/laut.js --help
+
+  Usage: laut.js [options]
+
+  Options:
+
+    -h, --help                   output usage information
+    -f, --file [file name]       The file(s) to process.
+    -e, --ext [file extensions]  The file extensions which should be processed. Defaults to "js, jsp, jspf, css".
+    -V, --version                output the version number
+
+````
+
 How fast is the tool
 -------------
 
@@ -44,3 +59,28 @@ $ npm install yuitest
 
 2. Execute:  
 ./node_modules/.bin/yuitest tests
+
+
+Distribute the tool
+-------------
+
+The tool is able to create an achive, ready for distribution for Windows, GNU/Linux, and OSX, both 32 and 64 bit versions.
+
+In order to create an archive for all platforms, go to the folder and execute:
+
+$ node package/package.js
+
+You will be able to pass some parameters, for example the platform or the dist directory. For more information, run node package/package.js --help:
+```bash
+$ node package/package.js --help
+
+  Usage: package.js [options]
+
+  Options:
+
+    -h, --help                       output usage information
+    -n, --nodejs [nodejs version]    The version of NodeJS to wrap [0.8.21] by default
+    -d, --dist [destination folder]  The dist folder in which package should be created [dist] by default
+    -p, --platform [build platform]  The platform, on which NodeJS should run ["win32", "win64", "osx32", "osx64", "gnu32", "gnu64"]
+    -V, --version                    output the version number
+````
