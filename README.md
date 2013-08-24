@@ -1,4 +1,4 @@
-Liferay Upgrade Tool
+Liferay AUI Upgrade Tool
 =============
 
 What is it and why it would be useful
