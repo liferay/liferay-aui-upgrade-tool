@@ -65,6 +65,7 @@ What is does
 3. Renames CSS classes. There are some classes, which should be renamed. The user can configure these, they are described in JSON format in "assets/css-classes.json" file
 4. Replaces the "inputCssClass" attribute in <aui:input>. "inputCssClass" is no more used. If there is "cssClass" attrbiute in <aui:input>, it adds the classes in "inputCssClass" after those in cssClass, otherwise it renames "inputCssClass" to "cssClass"
 5. Replaces ".selector-button input" in all places, where we attach delegate events (or single listeners via .on) with ".selector-button"
+6. Changes "handler: function(..."  to on : { click: function(... }. This is usually used on adding children to AUI Toolbar. See [here](https://github.com/ipeychev/liferay-aui-upgrade-tool/issues/9) for more information.
 
 Running tests
 -------------
