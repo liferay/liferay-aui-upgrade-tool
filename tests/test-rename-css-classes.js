@@ -42,4 +42,4 @@
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-success" id="') !== -1, '<div class="hide portlet-msg-success" id=" should be transformed');
 		}
 	}));
-})();
+}());

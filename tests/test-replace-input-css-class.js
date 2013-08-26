@@ -24,4 +24,4 @@
 			YUITest.Assert.isTrue(content.indexOf('cssClass="test">') !== -1, 'inputCSSClass as single attrbiute should be transformed.');
 		}
 	}));
-})();
+}());

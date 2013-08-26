@@ -46,4 +46,4 @@
 			YUITest.Assert.isTrue(contentJSP.indexOf('"disabled helper-not-hidden"') !== -1, '"disabled aui-helper-not-hidden" %> should be transformed.');
 		}
 	}));
-})();
+}());

@@ -24,4 +24,4 @@
 			YUITest.Assert.isTrue(content.indexOf('teston();},\n    \'.selector-button\'\n);;;') !== -1, '.selector-button in on listener should be transformed.');
 		}
 	}));
-})();
+}());

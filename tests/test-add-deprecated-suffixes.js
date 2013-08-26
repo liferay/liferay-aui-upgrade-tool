@@ -42,6 +42,6 @@
 
 		'test adding suffixes in case of position="inline"': function() {
 			YUITest.Assert.isTrue(contentJSP.indexOf('<aui:script position="inline" use="aui-io-plugin-deprecated,aui-io-deprecated,baui-io-plugin">') !== -1, '<aui:script position="inline" use="aui-io-plugin,aui-io,baui-io-plugin"> should be transformed.');
-		}		
+		}
 	}));
-})();
+}());
