@@ -10,8 +10,21 @@ To be more easier to upgrade the code, we have created this tool. Depending on y
 How to run the tool
 -------------
 
+In general, you have two options:
+
+### Running from the provided bundle for your OS ###
+
+Liferay AUI Upgrade Tool is able to package itself for various operation systems, including Windows, OSX, GNU/Linux, SunOS.
+For all of them it provides 32 or 64bit versions. If you have such package, you will have to untar/unzip it and run the script file. For Windows, it is called "run.bat". For all the others it is called "run.sh".
+
+If you want to create such a package and provide it to other people, see [here](#distribute-the-tool).
+
+### Downloading and running from GitHub ###
+
+If you don't have a prepared package for your OS, then you can download the tool and run it manually:
+
 1. Install NodeJS
-2. Clone the repository and navigate to its directory
+2. Clone the repository (or just download the provided zip file from GitHub) and navigate to its directory
 3. Install the reqiured modules:  
 $ npm install commander fs-extra walkdir yuitest
 4. Execute "node bin/laut.js -f projects/liferay/liferay-plugins"
@@ -20,7 +33,8 @@ where "projects/liferay/liferay-plugins" is the directory which contains the Por
 
 Once you run it, the tool will change what is possible. As a developer, you will have to review the changes and accept or reject them. Even if you reject them, they will still be useful as a hint that something won't work in this case and you will have to apply manually a change there.
 
-You can pass arguments too, here they are:
+### Supported options ###
+Liferay AUI Upgrade Tool supports various options:
 ````bash
 $ node bin/laut.js --help
 
@@ -34,6 +48,9 @@ $ node bin/laut.js --help
     -V, --version                output the version number
 
 ````
+
+_Note_:
+If you have a bundle for your OS, you can pass these options to the run script too.
 
 How fast is the tool
 -------------
