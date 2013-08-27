@@ -41,9 +41,16 @@
 		},
 
 		'test remove aui- prefix from JSP': function() {
-			YUITest.Assert.isTrue(contentJSP.indexOf('"disabled helper-hidden" %>') !== -1, '"disabled aui-helper-hidden" %> should be transformed.');
+			YUITest.Assert.isTrue(contentJSP.indexOf('cssClass=\'<%= showConnectedRequestedIcon ? "disabled" : "disabled helper-hidden" %>') !== -1, '"disabled aui-helper-hidden" %> should be transformed.');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('"disabled helper-not-hidden"') !== -1, '"disabled aui-helper-not-hidden" %> should be transformed.');
+			YUITest.Assert.isTrue(contentJSP.indexOf('cssClass=\'<%= showConnectedRequestedIcon ? "disabled" : "disabled helper-not-hidden" %>') !== -1, '"disabled aui-helper-not-hidden" %> should be transformed.');
+
+			/*
+			 * These below test #15
+			 */
+			YUITest.Assert.isTrue(contentJSP.indexOf('<aui:input cssClass=\'<%= showConnectedRequestedIcon ? "disabled" : "disabled helper-hidden" %>\'/>') !== -1, '<aui:input cssClass=\'<%= and "disabled helper-hidden" %>\'/> should have only one single quote.');
+
+			YUITest.Assert.isTrue(contentJSP.indexOf('<li class="<%= phone.isPrimary() ? "primary" : "" %>">') !== -1, '<li class="<%= phone and %>"> should have only one double quote.');
 		}
 	}));
 }());

@@ -17,3 +17,4 @@ A.all('.portlet-msg-success').hide();
 <div class="node helper-hidden"></div>
 
 <div class="aui-helper-hidden node"></div>
+
