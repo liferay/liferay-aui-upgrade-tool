@@ -40,6 +40,12 @@
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-error" id="') !== -1, '<div class="hide portlet-msg-error" id=" should be transformed');
 
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-success" id="') !== -1, '<div class="hide portlet-msg-success" id=" should be transformed');
+
+			/*
+			 * These two below test #14
+			 */
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="node hide"></div>') !== -1, '<div class="node helper-hidden"></div> should be transformed');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide node"></div>') !== -1, '<div class="aui-helper-hidden node"></div> should be transformed');
 		}
 	}));
 }());

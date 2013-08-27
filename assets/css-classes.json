@@ -1,7 +1,9 @@
 {
 	"CLASSES": {
 		"aui-btn-cancel": "close-panel",
+		"aui-helper-hidden": "hide",
 		"btn-cancel": "close-panel",
+		"helper-hidden": "hide",
 		"portlet-msg-alert": "alert",
 		"portlet-msg-error": "alert alert-error",
 		"portlet-msg-info": "alert alert-info",

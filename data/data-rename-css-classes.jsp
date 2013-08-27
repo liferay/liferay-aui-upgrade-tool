@@ -12,3 +12,8 @@ A.all('.portlet-msg-success').hide();
 <div class="hide portlet-msg-success" id="<portlet:namespace />portletSuccessMessage">
 	<liferay-ui:message key="your-request-completed-successfully" />
 </div>
+
+
+<div class="node helper-hidden"></div>
+
+<div class="aui-helper-hidden node"></div>
