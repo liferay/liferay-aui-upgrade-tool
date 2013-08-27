@@ -16,7 +16,7 @@
     YUITest.TestRunner.add(new YUITest.TestCase({
         name: "Test Rename Handler to onClick in Toolbar",
 
-        'test rename handler to onClick': function() {
+        'test rename handler: push, plus one property': function() {
             var dest,
                 src;
 
@@ -38,24 +38,39 @@
 
 
             YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
+        },
+
+        'test rename handler: push, no properties': function() {
+            var dest,
+                src;
 
             src =
-                '        label: \'button1\',\n' +
-                '        handler: function(event1) {\n' +
-                '            someFunction1();\n' +
+                '    {\n' +
+                '        icon: \'add2\',\n' +
+                '        label: \'button2\',\n' +
+                '        handler: function(event2) {\n' +
+                '            someFunction2();\n' +
                 '        }\n' +
                 '    }';
 
 
             dest =
-                '        label: \'button1\',\n' +
+                '    {\n' +
+                '        icon: \'add2\',\n' +
+                '        label: \'button2\',\n' +
                 '        on: {\n' +
-                '        click: function(event1) {\n' +
-                '            someFunction1();\n' +
-                '        }},';
+                '        click: function(event2) {\n' +
+                '            someFunction2();\n' +
+                '        }}\n' +
+                '    }';
 
 
             YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
+        },
+
+        'test rename handler: equals, no properties': function() {
+            var dest,
+                src;
 
             src =
                 '        label: \'button3\',\n' +
@@ -75,6 +90,11 @@
                 '];';
 
             YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
+        },
+
+        'test rename handler: equals, nested functions': function() {
+            var dest,
+                src;
 
             src =
                 '        label: \'button4\',\n' +
@@ -86,7 +106,51 @@
                 '        },\n' +
                 '        fun';
 
-             YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
+            dest =
+                '        label: \'button4\',\n' +
+                '        on: {\n' +
+                '        click: function(event4) {\n' +
+                '            function alabala() {\n' +
+                '                function nica() {\n' +
+                '                }\n' +
+                '            }\n' +
+                '        }},\n' +
+                '        fun';
+
+            YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
+        },
+
+        /*
+         * Tests #17
+         */
+        'test rename handler: used as property value': function() {
+            var dest,
+                src;
+
+            src =
+                '        children: [\n' +
+                '            {\n' +
+                '                handler: function(event) {\n' +
+                '                    instance._editEntry(contact);\n' +
+                '                },\n' +
+                '                icon: \'edit\',\n' +
+                '                label: \'label\'\n' +
+                '            }\n' +
+                '        ]';
+
+            dest =
+                '        children: [\n' +
+                '            {\n' +
+                '                on: {\n' +
+                '                click: function(event) {\n' +
+                '                    instance._editEntry(contact);\n' +
+                '                }},\n' +
+                '                icon: \'edit\',\n' +
+                '                label: \'label\'\n' +
+                '            }\n' +
+                '        ]';
+
+            YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
         }
     }));
 }());

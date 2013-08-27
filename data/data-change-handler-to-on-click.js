@@ -44,3 +44,17 @@
         }
     }
 ];
+
+new A.Toolbar(
+    {
+        children: [
+            {
+                handler: function(event) {
+                    instance._editEntry(contact);
+                },
+                icon: 'edit',
+                label: 'label'
+            }
+        ]
+    }
+).render();
