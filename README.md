@@ -57,11 +57,11 @@ How fast is the tool
 
 The whole directory which contains the [Liferay Plugins] (https://github.com/liferay/liferay-plugins/tree/master/portlets) is being processed for **3,55sec** on Apple Mac with 2.8 Ghz Intel Core i7 processor and 16 GB RAM.
 
-What is does
+What it does
 -------------
 
 1. Removes the "aui-" prefix from CSS classes in CSS, JS and JSP pages.
-2. Adds '-deprecated' suffix to all deprecated modules in AlloyUI 2.0. The user can configure these, they are described in a JSON format in "assets/deprecated-modules.json" file.
+2. Adds '-deprecated' suffix to all deprecated modules in AlloyUI 2.0. The user can configure these, they are described in JSON format in "assets/deprecated-modules.json" file.
 3. Renames CSS classes. There are some classes, which should be renamed. The user can configure these, they are described in JSON format in "assets/css-classes.json" file
 4. Replaces the "inputCssClass" attribute in <aui:input>. "inputCssClass" is no more used. If there is "cssClass" attrbiute in <aui:input>, it adds the classes in "inputCssClass" after those in cssClass, otherwise it renames "inputCssClass" to "cssClass"
 5. Replaces ".selector-button input" in all places, where we attach delegate events (or single listeners via .on) with ".selector-button"
