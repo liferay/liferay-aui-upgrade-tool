@@ -151,6 +151,54 @@
                 '        ]';
 
             YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
+        },
+
+        /*
+         * Tests #20
+         */
+        'test rename handler when there are multiple properties': function() {
+            var dest,
+                src;
+
+            src =
+                '        children: [\n' +
+                '            {\n' +
+                '                // This handler will be changed to on click\n' +
+                '                handler: function(event) {\n' +
+                '                    instance._editEntry(contact);\n' +
+                '                },\n' +
+                '                icon: \'edit\'\n' +
+                '            },\n' +
+                '            {\n' +
+                '                // This handler will no more be left alone\n' +
+                '                handler: function(event) {\n' +
+                '                    instance._deleteEntry(contact);\n' +
+                '                },\n' +
+                '                icon: \'delete\'\n' +
+                '            }\n' +
+                '        ]';
+
+            dest =
+                '        children: [\n' +
+                '            {\n' +
+                '                // This handler will be changed to on click\n' +
+                '                on: {\n' +
+                '                click: function(event) {\n' +
+                '                    instance._editEntry(contact);\n' +
+                '                }},\n' +
+                '                icon: \'edit\'\n' +
+                '            },\n' +
+                '            {\n' +
+                '                // This handler will no more be left alone\n' +
+                '                on: {\n' +
+                '                click: function(event) {\n' +
+                '                    instance._deleteEntry(contact);\n' +
+                '                }},\n' +
+                '                icon: \'delete\'\n' +
+                '            }\n' +
+                '        ]';
+
+            YUITest.Assert.isTrue(contentJS.indexOf(dest) !== -1, src + ' should be transformed');
         }
     }));
 }());

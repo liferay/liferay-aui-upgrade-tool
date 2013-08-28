@@ -1,3 +1,31 @@
+},
+{
+ handler1: function() {
+}
+
+instance._toolbar = new A.Toolbar(
+    {
+        boundingBox: instance._userToolbar,
+        children: [
+            {
+                // This handler will be changed to on click
+                handler: function(event) {
+                    instance._editEntry(contact);
+                },
+                icon: 'edit'
+            },
+            {
+                // This handler will no more be left alone
+                handler: function(event) {
+                    instance._deleteEntry(contact);
+                },
+                icon: 'delete'
+            }
+        ]
+    }
+).render();
+
+
 .push(
     {
         icon: 'add1',
