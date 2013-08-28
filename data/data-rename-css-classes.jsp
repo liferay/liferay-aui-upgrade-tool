@@ -18,3 +18,9 @@ A.all('.portlet-msg-success').hide();
 
 <div class="aui-helper-hidden node"></div>
 
+<liferay-ui:icon
+    cssClass='<%= showConnectedIcon ? "connected" : "connected aui-helper-hidden" %>'
+    message="connected"
+/>
+
+<div class='<%= condition ? someClass : "portlet-msg-info" %>'>

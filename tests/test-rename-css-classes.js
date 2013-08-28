@@ -40,12 +40,25 @@
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-error" id="') !== -1, '<div class="hide portlet-msg-error" id=" should be transformed');
 
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-success" id="') !== -1, '<div class="hide portlet-msg-success" id=" should be transformed');
+		},
 
-			/*
-			 * These two below test #14
-			 */
+		/*
+		 *
+		 * @test #14
+		 */
+		'test transofrming aui-helper-hidden': function() {
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="node hide"></div>') !== -1, '<div class="node helper-hidden"></div> should be transformed');
+
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide node"></div>') !== -1, '<div class="aui-helper-hidden node"></div> should be transformed');
+		},
+
+		/*
+		 * tests #18
+		 */
+		'test renaming classes in scriptlets': function() {
+			YUITest.Assert.isTrue(contentJSP.indexOf('cssClass=\'<%= showConnectedIcon ? "connected" : "connected hide" %>') !== -1, 'cssClass=\'<%= showConnectedIcon ? "connected" : "connected aui-helper-hidden" %>\'');
+
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>') !== -1, '<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>');
 		}
 	}));
 }());
