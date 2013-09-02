@@ -4,6 +4,7 @@
 		"assets",
 		"bin",
 		"lib",
+		"node_modules/ncp",
 		"node_modules/fs-extra",
 		"node_modules/commander",
 		"node_modules/walkdir"
