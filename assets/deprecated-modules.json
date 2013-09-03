@@ -54,5 +54,12 @@
 	    "aui-tpl-snippets-input",
 	    "aui-tpl-snippets-select",
 	    "aui-tpl-snippets-textarea"
+	],
+
+	"REMOVED_MODULES": [
+		{
+			"name": "aui-dialog",
+			"value": "liferay-util-window"
+		}
 	]
 }
