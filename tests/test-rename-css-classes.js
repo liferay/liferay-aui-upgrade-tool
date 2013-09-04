@@ -59,6 +59,13 @@
 			YUITest.Assert.isTrue(contentJSP.indexOf('cssClass=\'<%= showConnectedIcon ? "connected" : "connected hide" %>') !== -1, 'cssClass=\'<%= showConnectedIcon ? "connected" : "connected aui-helper-hidden" %>\'');
 
 			YUITest.Assert.isTrue(contentJSP.indexOf('<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>') !== -1, '<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>');
+		},
+
+		/*
+		 * @tests #24
+		 */
+		'test renaming <ul class="nav nav-tabs"': function() {
+			YUITest.Assert.isTrue(contentJSP.indexOf('<ul class="nav nav-tabs">') !== -1, '<ul class="tabview-list"> should be renamed');
 		}
 	}));
 }());

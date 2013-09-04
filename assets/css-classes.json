@@ -7,6 +7,7 @@
 		"portlet-msg-alert": "alert",
 		"portlet-msg-error": "alert alert-error",
 		"portlet-msg-info": "alert alert-info",
-		"portlet-msg-success": "alert alert-success"
+		"portlet-msg-success": "alert alert-success",
+		"tabview-list": "nav nav-tabs"
 	}
 }

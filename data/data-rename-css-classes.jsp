@@ -24,3 +24,6 @@ A.all('.portlet-msg-success').hide();
 />
 
 <div class='<%= condition ? someClass : "portlet-msg-info" %>'>
+
+
+<ul class="tabview-list">
