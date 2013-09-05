@@ -26,7 +26,7 @@ If you don't have a prepared package for your OS, then you can download the tool
 1. Install NodeJS
 2. Clone the repository (or just download the provided zip file from GitHub) and navigate to its directory
 3. Install the reqiured modules:  
-$ npm install commander fs-extra walkdir yuitest sha1
+$ npm install commander fs-extra walkdir yuitest sha1 ncp tar.gz http-get
 4. Execute "node bin/laut.js -f projects/liferay/liferay-plugins"
 
 where "projects/liferay/liferay-plugins" is the directory which contains the Portlets which have to be migrated.
