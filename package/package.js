@@ -231,7 +231,7 @@
             if (platformURI) {
                 platformURI = platformURI.replace(/\{version\}/g, program.nodejs);
 
-                fileName = path.normalize(outputDir + path.sep + platformURI.substring(platformURI.lastIndexOf(path.sep)).replace('\.exe', '_' + platform + '.exe'));
+                fileName = path.normalize(outputDir + path.sep + platformURI.substring(platformURI.lastIndexOf('/')).replace('\.exe', '_' + platform + '.exe'));
 
                 console.log('Downloading: ' + platformURI);
 
