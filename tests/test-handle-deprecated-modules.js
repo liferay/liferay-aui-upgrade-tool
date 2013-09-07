@@ -58,6 +58,16 @@
 
 		'test replacing removed modules in use': function() {
 			YUITest.Assert.isTrue(contentJSP.indexOf('aui-io-deprecated,liferay-util-window,baui-io-plugin') !== -1, 'aui-io,aui-dialog,baui-io-plugin should be transformed.');
+		},
+
+		/*
+		 * @tests #26
+		 */
+
+		'test repace modules in AUI().use(...)': function() {
+			YUITest.Assert.isTrue(contentJSP.indexOf('AUI().use(\'liferay-util-window\', \'event\',') !== -1, 'AUI().use(\'aui-dialog\', \'aui-io\', should be transformed.');
+
+			YUITest.Assert.isTrue(contentJSP.indexOf('AUI().use(\'event\', \'liferay-util-window\'') !== -1, 'AUI().use(\'aui-io\', \'aui-dialog\', should be transformed.');
 		}
 	}));
 }());
