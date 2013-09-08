@@ -7,6 +7,8 @@
         program = require('commander'),
         spawn = require('child_process').spawn,
         targz = require('tar.gz'),
+        Y = require('yui').use('promise'),
+
         laut = require(path.resolve(__dirname, '../lib')),
 
         files = require(path.resolve(__dirname, 'export.json')).FILES,
@@ -47,98 +49,166 @@
         fs.removeSync(outputDir);
     }
 
-    function copyFile(src, dest, callback) {
-        var isDir = fs.statSync(src).isDirectory();
+    function copyFile(src, dest) {
+        return new Y.Promise(function(resolve, reject) {
+            var isDir = fs.statSync(src).isDirectory();
 
-        if (isDir) {
-            fs.mkdirsSync(dest);
-        }
-
-        fs.copy(src, dest, callback);
-    }
-
-    function copyExecutableFile(dirToWrap, platform, callback) {
-        var executableFile;
-
-        executableFile = isWindows(platform) ? 'run.bat' : 'run.sh';
-
-        copyFile(path.resolve(__dirname, executableFile), dirToWrap + path.sep + executableFile, callback);
-    }
-
-    function copyRequiredFiles(dirToWrapData, callback) {
-        var copyFiles = files.slice(0);
-
-        copyFiles.forEach(
-            function(file) {
-                var dest,
-                    src;
-
-                dest = path.normalize(dirToWrapData + path.sep + file);
-                src = path.resolve(__dirname, '../', file);
-
-                copyFile(src, dest, function(error) {
-                    if (error) {
-                        console.error(error);
-                    }
-                    else {
-                        copyFiles.splice(copyFiles.indexOf(file), 1);
-
-                        if (!copyFiles.length) {
-                            callback();
-                        }
-                    }
-                });
+            if (isDir) {
+                fs.mkdirsSync(dest);
             }
-        );
-    }
 
-    function copyNodeJS(nodeJSFile, dest, platform, callback) {
-        dest = path.resolve(dest + path.sep + 'node');
-
-        if (isWindows(platform)) {
-            dest += '.exe';
-        }
-
-        copyFile(nodeJSFile, dest, callback);
-    }
-
-    function createZipFile(dirToWrap, platform) {
-        var finalDir,
-            outDirPlatform,
-            target;
-
-        target = path.resolve(program.dist + '/laut' + '_' + platform +  '_' + version + '.tar.gz');
-
-        outDirPlatform = outputDir + path.sep + 'out' + path.sep + platform;
-
-        fs.mkdirsSync(outDirPlatform);
-
-        finalDir = outDirPlatform + path.sep + 'laut_' + platform + '_' + version;
-
-        fs.rename(dirToWrap, finalDir, function(error) {
-            if (error) {
-                console.error(error);
-            }
-            else {
-                new targz().compress(finalDir, target, function(error) {
-                    if (error) {
-                        console.error(error);
-                    }
-                    else {
-                        console.log('The compression of: ' + target + ' has ended!');
-                    }
-                });
-            }
+            fs.copy(src, dest, function(error) {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(dest);
+                }
+            });
         });
     }
 
-    function extractNodeJS(file, callback) {
-        var nodeJSFile = path.normalize(file + '_extracted');
+    function copyExecutableFile(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var executableFile;
 
-        fs.mkdirsSync(nodeJSFile);
+            executableFile = isWindows(value.platform) ? 'run.bat' : 'run.sh';
 
-        new targz().extract(file, nodeJSFile, function(error) {
-            callback(error, nodeJSFile);
+            var cpPromise = copyFile(path.resolve(__dirname, executableFile), value.dirToWrap + path.sep + executableFile);
+
+            cpPromise.then(function() {
+                resolve(value);
+            },
+            function(error) {
+                reject(error);
+            });
+        });
+    }
+
+    function copyItself(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var dirToWrapData = path.normalize(value.dirToWrap + path.sep + 'data');
+
+            value.dirToWrapData = dirToWrapData;
+
+            var cpRequiredFilesPromise = copyRequiredFiles(value);
+
+            cpRequiredFilesPromise.then(
+                function() {
+                    resolve(value);
+                },
+                function(error) {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    function copyRequiredFiles(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var copyFiles = files.slice(0);
+
+            copyFiles.forEach(
+                function(file) {
+                    var cpPromise,
+                        dest,
+                        src;
+
+                    dest = path.normalize(value.dirToWrapData + path.sep + file);
+                    src = path.resolve(__dirname, '../', file);
+
+                    cpPromise = copyFile(src, dest);
+
+                    cpPromise.then(
+                        function() {
+                            copyFiles.splice(copyFiles.indexOf(file), 1);
+
+                            if (!copyFiles.length) {
+                                resolve(value);
+                            }
+                        },
+                        function(error) {
+                            reject(error);
+                        }
+                    );
+                }
+            );
+        });
+    }
+
+    function copyNodeJS(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var cpPromise,
+                dest = path.resolve(value.dirToWrap + path.sep + 'node');
+
+            if (isWindows(value.platform)) {
+                dest += '.exe';
+            }
+
+            cpPromise = copyFile(value.file, dest);
+
+            cpPromise.then(
+                function() {
+                    resolve(value);
+                },
+                function(error) {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    function createZipFile(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var finalDir,
+                outDirPlatform,
+                target;
+
+            target = path.resolve(program.dist + '/laut' + '_' + value.platform +  '_' + version + '.tar.gz');
+
+            outDirPlatform = outputDir + path.sep + 'out' + path.sep + value.platform;
+
+            fs.mkdirsSync(outDirPlatform);
+
+            finalDir = outDirPlatform + path.sep + 'laut_' + value.platform + '_' + version;
+
+            fs.rename(value.dirToWrap, finalDir, function(error) {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    new targz().compress(finalDir, target, function(error) {
+                        if (error) {
+                            reject(error);
+                        }
+                        else {
+                            console.log('The compression of: ' + target + ' has ended!');
+
+                            resolve(value);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    function downloadFile(fileName, platformURI, platform) {
+        return new Y.Promise(function(resolve, reject) {
+            var request;
+
+            console.log('Downloading: ' + platformURI);
+
+            request = http.get(platformURI, fileName, function(error, result) {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve({
+                        file: fileName,
+                        platform: platform
+                    });
+                }
+            });
         });
     }
 
@@ -146,73 +216,94 @@
         return platform.indexOf('win') === 0;
     }
 
-    function processDownloadedFile(nodeJSFile, platform) {
-        var dirToWrap,
-            dirToWrapData;
+    function prepareDownloadedFile(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var dirToWrap,
+                nodeJSFile;
 
-        console.log('Processing: ' + nodeJSFile);
+            nodeJSFile = value.file;
 
-        dirToWrap = path.normalize(nodeJSFile + '_wrapped');
+            console.log('Processing: ' + nodeJSFile);
 
-        fs.mkdirsSync(dirToWrap);
+            dirToWrap = path.normalize(nodeJSFile + '_wrapped');
 
-        copyExecutableFile(dirToWrap, platform, function(error) {
-            if (error) {
-                console.error(error);
+            fs.mkdirsSync(dirToWrap);
+
+            value.dirToWrap = dirToWrap;
+
+            resolve(value);
+        });
+    }
+
+    function extractFile(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var extractTGZPromise,
+                file,
+                nodeJSFile,
+                platform;
+
+            platform = value.platform;
+
+            if (isWindows(platform)) {
+                resolve(value);
             }
             else {
-                copyNodeJS(nodeJSFile, dirToWrap, platform, function(error) {
-                    if (error) {
-                        console.error(error);
-                    }
-                    else {
-                        // copy itself
+                file = value.file;
 
-                        dirToWrapData = path.normalize(dirToWrap + path.sep + 'data');
+                nodeJSFile = path.normalize(file + '_extracted');
 
-                        copyRequiredFiles(dirToWrapData, function() {
-                            createZipFile(dirToWrap, platform);
-                        });
+                fs.mkdirsSync(nodeJSFile);
+
+                value.nodeJSFile = nodeJSFile;
+
+                extractTGZPromise = extractTarGZFile(value);
+
+                extractTGZPromise.then(
+                    function() {
+                        resolve(value);
+                    },
+                    function(error) {
+                        reject(error);
                     }
-                });
+                );
             }
         });
     }
 
-    function onFileDownload(error, result, platform) {
-        var basename,
-            destFile,
-            file,
-            srcFile;
+    function extractTarGZFile(value) {
+        return new Y.Promise(function(resolve, reject) {
+            var basename,
+                destFile,
+                srcFile;
 
-        file = result.file;
-
-        if (isWindows(platform)) {
-            processDownloadedFile(file, platform);
-        }
-        else {
-            extractNodeJS(file, function(error, extractedFile) {
+            new targz().extract(value.file, value.nodeJSFile, function(error) {
                 if (error) {
-                    console.error(error);
+                    reject(error);
                 }
                 else {
-                    basename = path.basename(extractedFile);
+                    basename = path.basename(value.nodeJSFile);
 
-                    srcFile = extractedFile + path.sep + basename.substring(0, basename.lastIndexOf('.tar.gz'));
+                    srcFile = value.nodeJSFile + path.sep + basename.substring(0, basename.lastIndexOf('.tar.gz'));
 
-                    destFile = extractedFile + path.sep + 'node';
+                    destFile = value.nodeJSFile + path.sep + 'node';
 
                     fs.rename(srcFile, destFile, function(error) {
                         if (error) {
-                            console.error(error);
+                            reject(error);
                         }
                         else {
-                            processDownloadedFile(destFile, platform);
+                            value.file = destFile;
+
+                            resolve(value);
                         }
                     });
                 }
             });
-        }
+        });
+    }
+
+    function reportError(error) {
+        console.error(error);
     }
 
     // ENTRY point: download all dist files for the specified platforms
@@ -223,26 +314,22 @@
     program.platform.forEach(
         function(platform) {
             var fileName,
-                platformURI,
-                request;
+                platformURI;
 
             platformURI = uri[platform];
 
             if (platformURI) {
                 platformURI = platformURI.replace(/\{version\}/g, program.nodejs);
 
-                fileName = path.normalize(outputDir + path.sep + platformURI.substring(platformURI.lastIndexOf('/')).replace('\.exe', '_' + platform + '.exe'));
+                fileName = path.normalize(outputDir + path.sep + platformURI.substring(platformURI.lastIndexOf('/')).replace(/\.exe/, '_' + platform + '.exe'));
 
-                console.log('Downloading: ' + platformURI);
-
-                request = http.get(platformURI, fileName, function(error, result) {
-                    if (error) {
-                        console.error(error);
-                    }
-                    else {
-                        onFileDownload(error, result, platform);
-                    }
-                });
+                downloadFile(fileName, platformURI, platform)
+                    .then(extractFile)
+                    .then(prepareDownloadedFile)
+                    .then(copyExecutableFile)
+                    .then(copyNodeJS)
+                    .then(copyItself)
+                    .then(createZipFile, reportError);
             }
             else {
                 console.error('Unsupported platform: ' + platform);
