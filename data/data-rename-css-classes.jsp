@@ -43,3 +43,5 @@ A.all('.portlet-msg-success').hide();
         </span>
     </div>
 </c:if>
+
+var modifiedNotice = panel.one('.lfr-panel-title .modified-notice');

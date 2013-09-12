@@ -76,6 +76,12 @@
 
 			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="right-nav <%= (total %= end) ? "hide" : "next" %> more-class2">') !== -1, 'class="right-nav <%= (total %= end) ? "aui-helper-hidden" : "next" %> more-class2"> should be renamed');
 		},
-		
+
+		/*
+		 * @tests #32
+		 */
+		'test renaming lfr-title to accordion-heading"': function() {
+			YUITest.Assert.isTrue(contentJSP.indexOf('var modifiedNotice = panel.one(\'.accordion-heading .modified-notice\');') !== -1, 'var modifiedNotice = panel.one(\'.lfr-panel-title .modified-notice\'); should be renamed');
+		}
 	}));
 }());
