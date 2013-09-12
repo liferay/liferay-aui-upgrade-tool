@@ -56,9 +56,9 @@
 		 * tests #18
 		 */
 		'test renaming classes in scriptlets': function() {
-			YUITest.Assert.isTrue(contentJSP.indexOf('cssClass=\'<%= showConnectedIcon ? "connected" : "connected hide" %>') !== -1, 'cssClass=\'<%= showConnectedIcon ? "connected" : "connected aui-helper-hidden" %>\'');
+			YUITest.Assert.isTrue(contentJSP.indexOf('cssClass=\'<%= showConnectedIcon ? "connected" : "connected hide" %>') !== -1, 'cssClass=\'<%= showConnectedIcon ? "connected" : "connected aui-helper-hidden" %>\' should be transformed');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>') !== -1, '<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>') !== -1, '<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>  should be transformed');
 		},
 
 		/*
@@ -66,6 +66,16 @@
 		 */
 		'test renaming <ul class="nav nav-tabs"': function() {
 			YUITest.Assert.isTrue(contentJSP.indexOf('<ul class="nav nav-tabs">') !== -1, '<ul class="tabview-list"> should be renamed');
-		}
+		},
+
+		/*
+		 * @tests #30
+		 */
+		'test renaming mixed classes and scriplets"': function() {
+			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="left-nav <%= (start == 0) ? "hide" : "previous" %> more-class">') !== -1, 'class="left-nav <%= (start == 0) ? "aui-helper-hidden" : "previous" %> more-class"> should be renamed');
+
+			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="right-nav <%= (total %= end) ? "hide" : "next" %> more-class2">') !== -1, 'class="right-nav <%= (total %= end) ? "aui-helper-hidden" : "next" %> more-class2"> should be renamed');
+		},
+		
 	}));
 }());

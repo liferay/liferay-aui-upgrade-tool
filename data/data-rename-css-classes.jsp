@@ -27,3 +27,19 @@ A.all('.portlet-msg-success').hide();
 
 
 <ul class="tabview-list">
+
+<c:if test="<%= total > pageDelta %>">
+    <div class="navigation">
+        <span class="left-nav <%= (start == 0) ? "aui-helper-hidden" : "previous" %> more-class">fjfghjfgjfghj
+            <a href="javascript:;"><liferay-ui:message key="previous" /></a>
+        </span>
+
+        <span>
+            <liferay-ui:message arguments="<%= new Object[] {(start + 1), ((total >= end) ? end : total), total} %>" key="showing-x-x-of-x-results" />
+        </span>
+
+        <span class="right-nav <%= (total %= end) ? "aui-helper-hidden" : "next" %> more-class2">
+            <a href="javascript:;"><liferay-ui:message key="next" /></a>
+        </span>
+    </div>
+</c:if>
