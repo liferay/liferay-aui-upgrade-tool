@@ -16,6 +16,9 @@
     YUITest.TestRunner.add(new YUITest.TestCase({
         name: "Test Add Namespace to input",
 
+        /*
+         * @tests #30
+         */
         'test we do not touch invalid input start tag': function() {
             var dest,
                 src;
@@ -26,6 +29,9 @@
             YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be ignored');
         },
 
+        /*
+         * @tests #30
+         */
         'test add namespace to input before first closing form tag': function() {
             var dest,
                 src;
@@ -36,6 +42,9 @@
             YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be transformed');
         },
 
+        /*
+         * @tests #30
+         */
         'test we ignore already namespaced name attribute': function() {
             var dest,
                 src;
@@ -46,6 +55,9 @@
             YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be ignored');
         },
 
+        /*
+         * @tests #30
+         */
         'test we convert element in the second form': function() {
             var dest,
                 src;
@@ -56,6 +68,9 @@
             YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be transformed');
         },
 
+        /*
+         * @tests #30
+         */
         'test we ignore already namespaced element in the second form': function() {
             var dest,
                 src;
@@ -66,6 +81,9 @@
             YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be ignored');
         },
 
+        /*
+         * @tests #30
+         */
         'test we element outside a form': function() {
             var dest,
                 src;

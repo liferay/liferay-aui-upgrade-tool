@@ -67,7 +67,7 @@ What it does
 5. Replaces ".selector-button input" in all places, where we attach delegate events (or single listeners via .on) with ".selector-button"
 6. Changes "handler: function(..."  to on : { click: function(... }. This is usually used on adding children to AUI Toolbar. See [here](https://github.com/ipeychev/liferay-aui-upgrade-tool/issues/9) for more information.
 7. Replaces all occurences of new A.Dialog with Liferay.Util.Window.getWindow
-8. Adds <portlet:namespace /> in "name" attribute of "input" elements if not already namespaced.
+8. Adds <portlet:namespace /> to "name" attribute of "input" elements if not already namespaced.
 
 Running tests
 -------------
