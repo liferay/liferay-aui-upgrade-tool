@@ -84,7 +84,7 @@
         /*
          * @tests #30
          */
-        'test we element outside a form': function() {
+        'test we ignore element outside a form': function() {
             var dest,
                 src;
 
@@ -92,6 +92,29 @@
             dest = 'testEnd\n\n<input name="<portlet:namespace /> name4">';
 
             YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be ignored');
+        },
+
+        /*
+         * @tests #34
+         */
+         'test we prefix textarea, button and select too': function() {
+            var dest,
+                src;
+
+            src = '<textarea name="name6" id="test123">';
+            dest = '<textarea name="<portlet:namespace />name6" id="test123">';
+
+            YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be prefixed');
+
+            src = '<button name="name7">';
+            dest = '<button name="<portlet:namespace />name7">';
+
+            YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be prefixed');
+
+            src = '<select name="coches" id="selectCoches">';
+            dest = '<select name="<portlet:namespace />coches" id="selectCoches">';
+
+            YUITest.Assert.isTrue(contentJSP.indexOf(dest) !== -1, src + ' should be prefixed');
         }
     }));
 }());

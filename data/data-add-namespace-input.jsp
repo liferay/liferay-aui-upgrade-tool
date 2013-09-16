@@ -15,3 +15,17 @@ testStart
 testEnd
 
 <input name="<portlet:namespace /> name4">
+
+
+<form>
+<input name="<%= namespace %>name5">
+<textarea name="name6" id="test123">
+<button name="name7">
+
+<select name="coches" id="selectCoches">
+<option value="volvo">Volvo</option>
+<option value="saab">Saab</option>
+<option value="mercedes">Mercedes</option>
+<option value="audi">Audi</option>
+</select>
+</form>
