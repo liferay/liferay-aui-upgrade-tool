@@ -1,1 +1,1 @@
-A.all('.portlet-msg-success').hide();
+A.all('.tabview-list').hide();

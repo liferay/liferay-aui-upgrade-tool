@@ -7,7 +7,7 @@
     var path = require('path');
 
     YUITest.TestRunner.add(new YUITest.TestCase({
-        name: "Test Hhandle JSPF files",
+        name: "Test handle JSPF files",
 
         'test if we handle JSPF files': function() {
             var exec,
@@ -15,7 +15,7 @@
 
             file = path.resolve(__dirname, new Date().getTime() + '.jspf');
 
-            fs.writeFileSync(file, 'A.all(\'.portlet-msg-success\').hide();');
+            fs.writeFileSync(file, 'A.all(\'.tabview-list\').hide();');
 
             exec = require('child_process').exec;
 
@@ -26,7 +26,7 @@
                     fs.removeSync(file);
 
                     this.resume(function() {
-                        YUITest.Assert.isTrue(content.indexOf('A.all(\'.alert.alert-success\').hide();') !== -1, 'portlet-msg-success should be transformed.');
+                        YUITest.Assert.isTrue(content.indexOf('A.all(\'.nav.nav-tabs\').hide();') !== -1, 'tabview-list should be transformed.');
                     });
                 }.bind(this),
                 {

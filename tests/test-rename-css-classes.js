@@ -21,25 +21,25 @@
 		name: "Test Rename CSS Classes",
 
 		'test rename CSS classes from CSS': function() {
-			YUITest.Assert.isTrue(contentCSS.indexOf('.test123 .close-panel {') !== -1, '.test123 .btn-cancel { should be transformed.');
+			YUITest.Assert.isTrue(contentCSS.indexOf('.test123 .close-panel {') !== -1, '.test123 .tabview-list { should be transformed.');
 
-			YUITest.Assert.isTrue(contentCSS.indexOf('.alert {') !== -1, '.portlet-msg-alert { should be transformed.');
+			YUITest.Assert.isTrue(contentCSS.indexOf('.hide {') !== -1, '.aui-helper-hidden { should be transformed.');
 
-			YUITest.Assert.isTrue(contentCSS.indexOf('.alert.alert-success .alert.alert-info {') !== -1, '.portlet-msg-success .portlet-msg-info { should be transformed.');
+			YUITest.Assert.isTrue(contentCSS.indexOf('.nav.nav-tabs .close-panel') !== -1, '.tabview-list .aui-tabview-list { should be transformed.');
 		},
 
 		'test rename CSS classes from JSP': function() {
-			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="alert alert-error"><%= fi') !== -1, 'portlet-msg-error should be transformed.');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="nav nav-tabs"><%= fi') !== -1, 'tabview-list should be transformed.');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('A.all(\'.alert.alert-success\').hide();') !== -1, 'portlet-msg-success should be transformed.');
+			YUITest.Assert.isTrue(contentJSP.indexOf('A.all(\'.accordion-heading\').hide();') !== -1, 'lfr-panel-title should be transformed.');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="alert alert-error"><liferay-ui:message') !== -1, '<span class="portlet-msg-error"><liferay-ui:message should be transformed.');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<span class="nav nav-tabs"><liferay-ui:message') !== -1, '<span class="tabview-list"><liferay-ui:message should be transformed.');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="alert">') !== -1, '<div class="portlet-msg-alert"> should be transformed.');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide">') !== -1, '<div class="helper-hidden"> should be transformed.');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-error" id="') !== -1, '<div class="hide portlet-msg-error" id=" should be transformed');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide nav nav-tabs" id="') !== -1, '<div class="hide tabview-list" id=" should be transformed');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide alert alert-success" id="') !== -1, '<div class="hide portlet-msg-success" id=" should be transformed');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class="hide hide" id="') !== -1, '<div class="hide aui-helper-hidden" id=" should be transformed');
 		},
 
 		/*
@@ -58,7 +58,7 @@
 		'test renaming classes in scriptlets': function() {
 			YUITest.Assert.isTrue(contentJSP.indexOf('cssClass=\'<%= showConnectedIcon ? "connected" : "connected hide" %>') !== -1, 'cssClass=\'<%= showConnectedIcon ? "connected" : "connected aui-helper-hidden" %>\' should be transformed');
 
-			YUITest.Assert.isTrue(contentJSP.indexOf('<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>') !== -1, '<div class=\'<%= condition ? someClass : "alert alert-info" %>\'>  should be transformed');
+			YUITest.Assert.isTrue(contentJSP.indexOf('<div class=\'<%= condition ? someClass : "accordion-heading" %>\'>') !== -1, '<div class=\'<%= condition ? someClass : "lfr-panel-title" %>\'>  should be transformed');
 		},
 
 		/*
