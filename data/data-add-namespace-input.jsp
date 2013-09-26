@@ -1,7 +1,7 @@
 testStart
 
 <form>
-<inputid="name1" name="name1">
+<input id="name1" name="name1">
 <input id="test2" name="name2">
 </form>
 
