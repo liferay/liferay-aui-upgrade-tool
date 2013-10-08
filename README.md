@@ -15,28 +15,35 @@ In general, you have two options:
 ### Running from the provided bundle for your OS ###
 
 Liferay AUI Upgrade Tool is able to package itself for various operation systems, including Windows, OSX, GNU/Linux, SunOS.
-For all of them it provides 32 or 64bit versions. If you have such package, you will have to untar/unzip it and run the script file. For Windows, it is called "run.bat". For all the others it is called "run.sh".
+For all of them it provides 32 or 64bit versions. If you have such package, you will have to untar/unzip it and run the script file. For Windows, it is called `run.bat`. For all the others it is called `run.sh`.
 
 If you want to create such a package and provide it to other people, see [here](#distribute-the-tool).
 
-### Downloading and running from GitHub ###
+### Running from NPM ###
 
-If you don't have a prepared package for your OS, then you can download the tool and run it manually:
+1. Install [NodeJS](http://nodejs.org/download/).
 
-1. Install NodeJS
-2. Clone the repository (or just download the provided zip file from GitHub) and navigate to its directory
-3. Install the reqiured modules:  
-$ npm install commander fs-extra walkdir yuitest sha1 ncp tar.gz http-get yui@stable
-4. Execute "node bin/laut.js -f projects/liferay/liferay-plugins"
+2. Install module:
 
-where "projects/liferay/liferay-plugins" is the directory which contains the Portlets which have to be migrated.
+  ```bash
+$ [sudo] npm install -g laut
+  ```
+
+3. Execute:
+
+  ```bash
+$ laut -f projects/liferay/liferay-plugins
+  ```
+
+Where `projects/liferay/liferay-plugins` is the directory which contains the Portlets which have to be migrated.
 
 Once you run it, the tool will change what is possible. As a developer, you will have to review the changes and accept or reject them. Even if you reject them, they will still be useful as a hint that something won't work in this case and you will have to apply manually a change there.
 
 ### Supported options ###
 Liferay AUI Upgrade Tool supports various options:
-````bash
-$ node bin/laut.js --help
+
+  ```bash
+$ laut --help
 
   Usage: laut.js [options]
 
@@ -46,8 +53,7 @@ $ node bin/laut.js --help
     -f, --file [file name]       The file(s) to process.
     -e, --ext [file extensions]  The file extensions which should be processed. Defaults to "js, jsp, jspf, css".
     -V, --version                output the version number
-
-````
+  ```
 
 _Note_:
 If you have a bundle for your OS, you can pass these options to the run script too.
@@ -55,31 +61,36 @@ If you have a bundle for your OS, you can pass these options to the run script t
 How fast is the tool
 -------------
 
-The whole directory which contains the [Liferay Plugins] (https://github.com/liferay/liferay-plugins/tree/master/portlets) is being processed for **3,55sec** on Apple Mac with 2.8 Ghz Intel Core i7 processor and 16 GB RAM.
+The whole directory which contains the [Liferay Plugins](https://github.com/liferay/liferay-plugins/tree/master/portlets) is being processed for **3,55sec** on Apple Mac with 2.8 Ghz Intel Core i7 processor and 16 GB RAM.
 
 What it does
 -------------
 
-1. Removes the "aui-" prefix from CSS classes in CSS, JS and JSP pages.
-2. Adds '-deprecated' suffix to all deprecated modules in AlloyUI 2.0. The user can configure these, they are described in JSON format in "assets/deprecated-modules.json" file.
-3. Renames CSS classes. There are some classes, which should be renamed. The user can configure these, they are described in JSON format in "assets/css-classes.json" file
-4. Replaces the "inputCssClass" attribute in <aui:input>. "inputCssClass" is no more used. If there is "cssClass" attrbiute in <aui:input>, it adds the classes in "inputCssClass" after those in cssClass, otherwise it renames "inputCssClass" to "cssClass"
-5. Replaces ".selector-button input" in all places, where we attach delegate events (or single listeners via .on) with ".selector-button"
-6. Changes "handler: function(..."  to on : { click: function(... }. This is usually used on adding children to AUI Toolbar. See [here](https://github.com/ipeychev/liferay-aui-upgrade-tool/issues/9) for more information.
-7. Replaces all occurences of new A.Dialog with Liferay.Util.Window.getWindow
-8. Adds &lt;portlet:namespace /&gt; to "name" attribute of "input" elements if not already namespaced.
+1. Removes the `aui-` prefix from CSS classes in CSS, JS and JSP pages.
+2. Adds `-deprecated` suffix to all deprecated modules in AlloyUI 2.0. The user can configure these, they are described in JSON format in `assets/deprecated-modules.json` file.
+3. Renames CSS classes. There are some classes, which should be renamed. The user can configure these, they are described in JSON format in `assets/css-classes.json` file.
+4. Replaces the `inputCssClass` attribute in `<aui:input>`. `inputCssClass` is no more used. If there is `cssClass` attribute in `<aui:input>`, it adds the classes in `inputCssClass` after those in `cssClass`, otherwise it renames `inputCssClass` to `cssClass`
+5. Replaces `.selector-button input` in all places, where we attach delegate events (or single listeners via .on) with `.selector-button`.
+6. Changes `handler: function(...`  to `on : { click: function(... }`. This is usually used on adding children to AUI Toolbar. See [here](https://github.com/ipeychev/liferay-aui-upgrade-tool/issues/9) for more information.
+7. Replaces all occurences of new `A.Dialog` with `Liferay.Util.Window.getWindow`.
+8. Adds `<portlet:namespace />` to `name` attribute of `input` elements if not already namespaced.
 
 Running tests
 -------------
 
 The tool comes with unit tests, created using YUI Test. In order to run them:
 
-1. Run:  
-$ npm install yuitest
+1. Run:
 
-2. Execute:  
-./node_modules/.bin/yuitest tests
+  ```bash
+$ npm install
+  ```
 
+2. Execute:
+
+  ```bash
+$ npm test
+  ```
 
 Distribute the tool
 -------------
@@ -88,11 +99,14 @@ The tool is able to create an achive, ready for distribution for Windows, GNU/Li
 
 In order to create an archive for all platforms, go to the folder and execute:
 
-$ node package/package.js
+  ```bash
+$ laut-pkg
+  ```
 
-You will be able to pass some parameters, for example the platform or the dist directory. For more information, run node package/package.js --help:
-```bash
-$ node package/package.js --help
+You will be able to pass some parameters, for example the platform or the dist directory. For more information:
+
+  ```bash
+$ laut-pkg --help
 
   Usage: package.js [options]
 
@@ -103,7 +117,38 @@ $ node package/package.js --help
     -d, --dist [destination folder]  The dist folder in which package should be created [dist] by default
     -p, --platform [build platform]  The platform, on which NodeJS should run ["win32", "win64", "osx32", "osx64", "gnu32", "gnu64"]
     -V, --version                    output the version number
-````
+  ```
+
+Contributing
+-------------
+
+If you want to contribute to this project, make sure to follow these steps:
+
+1. Install [NodeJS](http://nodejs.org/download/).
+
+2. Clone the repository:
+
+  ```bash
+$ git clone git@github.com:liferay/liferay-aui-upgrade-tool.git
+  ```
+
+3. Install all dependencies:
+
+  ```bash
+$ npm install
+  ```
+
+4. Link your cloned repository to global packages:
+
+  ```bash
+$ npm link
+  ```
+
+5. Execute:
+
+  ```bash
+$ laut -f projects/liferay/liferay-plugins"
+  ```
 
 Liferay AUI Upgrade Tool License
 -------------
