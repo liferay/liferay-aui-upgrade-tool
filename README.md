@@ -147,7 +147,7 @@ $ npm link
 5. Execute:
 
   ```bash
-$ laut -f projects/liferay/liferay-plugins"
+$ laut -f projects/liferay/liferay-plugins
   ```
 
 Liferay AUI Upgrade Tool License
