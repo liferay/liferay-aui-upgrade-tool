@@ -1,0 +1,44 @@
+{
+    "name": "laut",
+    "description": "Upgrade themes/plugins from Liferay Portal 6.1 to 6.2",
+    "version": "0.0.94",
+    "author": {
+        "name": "Iliyan Peychev",
+        "email": "iliyan.peychev@liferay.com"
+    },
+    "license": "LGPL",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:liferay/liferay-aui-upgrade-tool.git"
+    },
+    "bugs": {
+        "url": "https://github.com/liferay/liferay-aui-upgrade-tool/issues"
+    },
+    "keywords": [
+        "liferay", "alloy-ui"
+    ],
+    "bin": {
+        "laut": "bin/laut.js",
+        "laut-pkg": "package/package.js"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/yuitest tests"
+    },
+    "dependencies": {
+        "commander": "2.0.0",
+        "fs-extra": "0.7.0",
+        "http-get": "0.5.10",
+        "ncp": "0.4.2",
+        "sha1": "1.1.0",
+        "tar.gz": "0.1.1",
+        "walkdir": "0.0.7",
+        "yui": "3.13.0"
+    },
+    "devDependencies": {
+        "yuitest": "0.7.9"
+    },
+    "engines": {
+        "node": ">=0.8"
+    },
+    "preferGlobal": "true"
+}
