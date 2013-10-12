@@ -58,11 +58,6 @@ $ laut --help
 _Note_:
 If you have a bundle for your OS, you can pass these options to the run script too.
 
-How fast is the tool
--------------
-
-The whole directory which contains the [Liferay Plugins](https://github.com/liferay/liferay-plugins/tree/master/portlets) is being processed for **3,55sec** on Apple Mac with 2.8 Ghz Intel Core i7 processor and 16 GB RAM.
-
 What it does
 -------------
 
@@ -75,49 +70,11 @@ What it does
 7. Replaces all occurences of new `A.Dialog` with `Liferay.Util.Window.getWindow`.
 8. Adds `<portlet:namespace />` to `name` attribute of `input` elements if not already namespaced.
 
-Running tests
+
+How fast is the tool
 -------------
 
-The tool comes with unit tests, created using YUI Test. In order to run them:
-
-1. Run:
-
-  ```bash
-$ npm install
-  ```
-
-2. Execute:
-
-  ```bash
-$ npm test
-  ```
-
-Distribute the tool
--------------
-
-The tool is able to create an achive, ready for distribution for Windows, GNU/Linux, and OSX, both 32 and 64 bit versions.
-
-In order to create an archive for all platforms, go to the folder and execute:
-
-  ```bash
-$ laut-pkg
-  ```
-
-You will be able to pass some parameters, for example the platform or the dist directory. For more information:
-
-  ```bash
-$ laut-pkg --help
-
-  Usage: package.js [options]
-
-  Options:
-
-    -h, --help                       output usage information
-    -n, --nodejs [nodejs version]    The version of NodeJS to wrap [0.8.21] by default
-    -d, --dist [destination folder]  The dist folder in which package should be created [dist] by default
-    -p, --platform [build platform]  The platform, on which NodeJS should run ["win32", "win64", "osx32", "osx64", "gnu32", "gnu64"]
-    -V, --version                    output the version number
-  ```
+The whole directory which contains the [Liferay Plugins](https://github.com/liferay/liferay-plugins/tree/master/portlets) is being processed for **3,55sec** on Apple Mac with 2.8 Ghz Intel Core i7 processor and 16 GB RAM.
 
 Contributing
 -------------
@@ -148,6 +105,72 @@ $ npm link
 
   ```bash
 $ laut -f projects/liferay/liferay-plugins
+  ```
+
+Running tests
+-------------
+
+The tool comes with unit tests, created using YUI Test. In order to run them:
+
+1. Run:
+
+  ```bash
+$ npm install
+  ```
+
+2. Execute:
+
+  ```bash
+$ npm test
+  ```
+
+Distribute the tool
+-------------
+
+The tool is able to create an achive, ready for distribution for Windows, GNU/Linux, and OSX, both 32 and 64 bit versions.
+
+In order to create an archive for all platforms, follow these steps:
+
+1. Install [NodeJS](http://nodejs.org/download/).
+
+2. Clone the repository:
+
+  ```bash
+$ git clone git@github.com:liferay/liferay-aui-upgrade-tool.git
+  ```
+
+3. Install all dependencies:
+
+  ```bash
+$ npm install
+  ```
+
+4. Link your cloned repository to global packages:
+
+  ```bash
+$ npm link
+  ```
+
+5. Execute laut-pkg command:
+
+  ```bash
+$ laut-pkg
+  ```
+
+You will be able to pass some parameters, for example the platform or the dist directory. For more information:
+
+  ```bash
+$ laut-pkg --help
+
+  Usage: package.js [options]
+
+  Options:
+
+    -h, --help                       output usage information
+    -n, --nodejs [nodejs version]    The version of NodeJS to wrap [0.8.21] by default
+    -d, --dist [destination folder]  The dist folder in which package should be created [dist] by default
+    -p, --platform [build platform]  The platform, on which NodeJS should run ["win32", "win64", "osx32", "osx64", "gnu32", "gnu64"]
+    -V, --version                    output the version number
   ```
 
 Liferay AUI Upgrade Tool License
