@@ -7,6 +7,7 @@
 		"node_modules/commander",
 		"node_modules/fs-extra",
 		"node_modules/ncp",
+		"node_modules/rimraf",
 		"node_modules/sha1",
 		"node_modules/walkdir"
 	]
