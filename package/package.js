@@ -2,7 +2,8 @@
 
 'use strict';
 
-var fs = require('fs-extra'),
+var AdmZip = require('adm-zip'),
+    fs = require('fs-extra'),
     http = require('http-get'),
     path = require('path'),
     program = require('commander'),
@@ -15,20 +16,22 @@ var fs = require('fs-extra'),
     files = require(path.resolve(__dirname, 'export.json')).FILES,
 
     outputDir,
-    uri = {
-        gnu32: 'http://nodejs.org/dist/v{version}/node-v{version}-linux-x86.tar.gz',
-        gnu64: 'http://nodejs.org/dist/v{version}/node-v{version}-linux-x64.tar.gz',
-        osx32: 'http://nodejs.org/dist/v{version}/node-v{version}-darwin-x86.tar.gz',
-        osx64: 'http://nodejs.org/dist/v{version}/node-v{version}-darwin-x64.tar.gz',
-        sun32: 'http://nodejs.org/dist/v{version}/node-v{version}-sunos-x86.tar.gz',
-        sun64: 'http://nodejs.org/dist/v{version}/node-v{version}-sunos-x64.tar.gz',
-        win32: 'http://nodejs.org/dist/v{version}/node.exe',
-        win64: 'http://nodejs.org/dist/v{version}/x64/node.exe'
+    nodeURI = {
+        gnu32: 'http://nodejs.org/dist/v{nodeVersion}/node-v{nodeVersion}-linux-x86.tar.gz',
+        gnu64: 'http://nodejs.org/dist/v{nodeVersion}/node-v{nodeVersion}-linux-x64.tar.gz',
+        osx32: 'http://nodejs.org/dist/v{nodeVersion}/node-v{nodeVersion}-darwin-x86.tar.gz',
+        osx64: 'http://nodejs.org/dist/v{nodeVersion}/node-v{nodeVersion}-darwin-x64.tar.gz',
+        sun32: 'http://nodejs.org/dist/v{nodeVersion}/node-v{nodeVersion}-sunos-x86.tar.gz',
+        sun64: 'http://nodejs.org/dist/v{nodeVersion}/node-v{nodeVersion}-sunos-x64.tar.gz',
+        win32: 'http://nodejs.org/dist/v{nodeVersion}/node.exe',
+        win64: 'http://nodejs.org/dist/v{nodeVersion}/x64/node.exe'
     },
+    npmURI = 'http://nodejs.org/dist/npm/npm-{npmVersion}.zip',
     version = laut.version;
 
 program
-    .option('-n, --nodejs [nodejs version]', 'The version of NodeJS to wrap [0.8.21] by default', '0.8.21')
+    .option('-node, --nodejs [nodejs version]', 'The version of NodeJS to wrap [0.8.21] by default', '0.8.21')
+    .option('-npm, --npm [npm version]', 'The version of NPM to wrap [1.2.11] by default', '1.2.11')
     .option('-d, --dist [destination folder]', 'The dist folder in which package should be created [dist] by default', path.resolve(__dirname, '../dist'))
     .option('-p, --platform [build platform]', 'The platform, on which NodeJS should run ["win32", "win64", "osx32", "osx64", "gnu32", "gnu64", "sun32", "sun64"]', function(value) {
         value = value.split(',');
@@ -73,11 +76,20 @@ function copyFile(src, dest) {
 
 function copyExecutableFile(value) {
     return new Y.Promise(function(resolve, reject) {
-        var executableFile;
+        var cpPromise,
+            extension = isWindows(value.platform) ? '.bat' : '.sh',
+            files = ['run', 'update'];
 
-        executableFile = isWindows(value.platform) ? 'run.bat' : 'run.sh';
+        files = files.map(
+            function(item) {
+                return item + extension;
+            }
+        );
 
-        var cpPromise = copyFile(path.resolve(__dirname, executableFile), value.dirToWrap + path.sep + executableFile);
+        cpPromise = Y.batch(
+            copyFile(path.resolve(__dirname, files[0]), value.dirToWrap + path.sep + files[0]),
+            copyFile(path.resolve(__dirname, files[1]), value.dirToWrap + path.sep + files[1])
+        );
 
         cpPromise.then(function() {
             resolve(value);
@@ -148,7 +160,7 @@ function copyNodeJS(value) {
             dest += '.exe';
         }
 
-        cpPromise = copyFile(value.file, dest);
+        cpPromise = copyFile(value.nodeFileName, dest);
 
         cpPromise.then(
             function() {
@@ -158,6 +170,28 @@ function copyNodeJS(value) {
                 reject(error);
             }
         );
+    });
+}
+
+function copyNPM(value) {
+    return new Y.Promise(function(resolve, reject) {
+        if (isWindows(value.platform)) {
+            var cpPromise;
+
+            cpPromise = copyFile(value.npmFileName, value.dirToWrap);
+
+            cpPromise.then(
+                function() {
+                    resolve(value);
+                },
+                function(error) {
+                    reject(error);
+                }
+            );
+        }
+        else {
+            resolve(value);
+        }
     });
 }
 
@@ -195,23 +229,40 @@ function createZipFile(value) {
     });
 }
 
-function downloadFile(fileName, platformURI, platform) {
+function downloadNodeJS(value) {
     return new Y.Promise(function(resolve, reject) {
-        var request;
+        console.log('Downloading: ' + value.nodePlatformURI);
 
-        console.log('Downloading: ' + platformURI);
-
-        request = http.get(platformURI, fileName, function(error, result) {
+        http.get(value.nodePlatformURI, value.nodeFileName, function(error, result) {
             if (error) {
                 reject(error);
             }
             else {
-                resolve({
-                    file: fileName,
-                    platform: platform
-                });
+                resolve(value);
             }
         });
+    });
+}
+
+function downloadNPM(value) {
+    return new Y.Promise(function(resolve, reject) {
+        var request;
+
+        if (isWindows(value.platform)) {
+            console.log('Downloading: ' + value.npmPlatformURI);
+
+            request = http.get(value.npmPlatformURI, value.npmFileName, function(error, result) {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(value);
+                }
+            });
+        }
+        else {
+            resolve(value);
+        }
     });
 }
 
@@ -224,7 +275,7 @@ function prepareDownloadedFile(value) {
         var dirToWrap,
             nodeJSFile;
 
-        nodeJSFile = value.file;
+        nodeJSFile = value.nodeFileName;
 
         console.log('Processing: ' + nodeJSFile);
 
@@ -238,7 +289,7 @@ function prepareDownloadedFile(value) {
     });
 }
 
-function extractFile(value) {
+function extractNodeJS(value) {
     return new Y.Promise(function(resolve, reject) {
         var extractTGZPromise,
             file,
@@ -251,7 +302,7 @@ function extractFile(value) {
             resolve(value);
         }
         else {
-            file = value.file;
+            file = value.nodeFileName;
 
             nodeJSFile = path.normalize(file + '_extracted');
 
@@ -273,13 +324,37 @@ function extractFile(value) {
     });
 }
 
+function extractNPM(value) {
+    return new Y.Promise(function(resolve, reject) {
+        if (isWindows(value.platform)) {
+            var extractedFile,
+                zip;
+
+                zip = new AdmZip(value.npmFileName);
+
+                extractedFile = path.normalize(value.npmFileName + '_extracted');
+
+                console.log('Extracting NPM to: ' + extractedFile);
+
+                zip.extractAllTo(extractedFile);
+
+                value.npmFileName = extractedFile;
+
+                resolve(value);
+            }
+            else {
+                resolve(value);
+            }
+    });
+}
+
 function extractTarGZFile(value) {
     return new Y.Promise(function(resolve, reject) {
         var basename,
             destFile,
             srcFile;
 
-        new targz().extract(value.file, value.nodeJSFile, function(error) {
+        new targz().extract(value.nodeFileName, value.nodeJSFile, function(error) {
             if (error) {
                 reject(error);
             }
@@ -295,7 +370,7 @@ function extractTarGZFile(value) {
                         reject(error);
                     }
                     else {
-                        value.file = destFile;
+                        value.nodeFileName = destFile;
 
                         resolve(value);
                     }
@@ -316,21 +391,39 @@ process.on('uncaughtException', cleanup);
 
 program.platform.forEach(
     function(platform) {
-        var fileName,
-            platformURI;
+        var nodeFileName,
+            nodePlatformURI,
+            npmFileName,
+            npmPlatformURI,
+            value;
 
-        platformURI = uri[platform];
+        nodePlatformURI = nodeURI[platform];
 
-        if (platformURI) {
-            platformURI = platformURI.replace(/\{version\}/g, program.nodejs);
+        if (nodePlatformURI) {
+            nodePlatformURI = nodePlatformURI.replace(/\{nodeVersion\}/g, program.nodejs);
 
-            fileName = path.normalize(outputDir + path.sep + platformURI.substring(platformURI.lastIndexOf('/')).replace(/\.exe/, '_' + platform + '.exe'));
+            npmPlatformURI = npmURI.replace(/\{npmVersion\}/g, program.npm);
 
-            downloadFile(fileName, platformURI, platform)
-                .then(extractFile)
+            nodeFileName = path.normalize(outputDir + path.sep + nodePlatformURI.substring(nodePlatformURI.lastIndexOf('/')).replace(/\.exe/, '_' + platform + '.exe'));
+
+            npmFileName = path.normalize(outputDir + path.sep + npmPlatformURI.substring(npmPlatformURI.lastIndexOf('/')).replace(/\.zip/, '_' + platform + '.zip'));
+
+            value = {
+                nodeFileName: nodeFileName,
+                nodePlatformURI: nodePlatformURI,
+                npmPlatformURI: npmPlatformURI,
+                npmFileName: npmFileName,
+                platform: platform
+            };
+
+            downloadNodeJS(value)
+                .then(downloadNPM)
+                .then(extractNodeJS)
+                .then(extractNPM)
                 .then(prepareDownloadedFile)
                 .then(copyExecutableFile)
                 .then(copyNodeJS)
+                .then(copyNPM)
                 .then(copyItself)
                 .then(createZipFile, reportError);
         }

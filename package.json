@@ -1,7 +1,7 @@
 {
     "name": "laut",
     "description": "Upgrade plugins/themes from Liferay Portal 6.1 to 6.2",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "author": {
         "name": "Iliyan Peychev",
         "email": "iliyan.peychev@gmail.com"
@@ -25,16 +25,18 @@
         "test": "node_modules/.bin/yuitest tests"
     },
     "dependencies": {
+        "adm-zip": "0.4.3",
         "commander": "2.0.0",
         "fs-extra": "0.7.0",
-        "http-get": "0.5.10",
         "ncp": "0.4.2",
+        "rimraf": "2.2.4",
         "sha1": "1.1.0",
-        "tar.gz": "0.1.1",
-        "walkdir": "0.0.7",
-        "yui": "3.13.0"
+        "walkdir": "0.0.7"
     },
     "devDependencies": {
+        "http-get": "0.5.10",
+        "tar.gz": "0.1.1",
+        "yui": "3.13.0",
         "yuitest": "0.7.9"
     },
     "engines": {
