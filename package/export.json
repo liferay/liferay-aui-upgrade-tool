@@ -9,6 +9,7 @@
 		"node_modules/ncp",
 		"node_modules/rimraf",
 		"node_modules/sha1",
-		"node_modules/walkdir"
+		"node_modules/walkdir",
+		"package.json"
 	]
 }
